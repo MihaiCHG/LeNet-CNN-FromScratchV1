@@ -36,8 +36,8 @@ class Convolution2D:
         self.inputs = np.zeros((C, W, H))
         for c in range(inputs.shape[0]):
             self.inputs[c,:,:] = self.zero_padding(inputs[c,:,:], self.p)
-        WW = (W - self.K)/self.s + 1
-        HH = (H - self.K)/self.s + 1
+        WW = int((W - self.K)/self.s + 1)
+        HH = int((H - self.K)/self.s + 1)
         feature_maps = np.zeros((self.F, WW, HH))
         for f in range(self.F):
             for w in range(0, WW, self.s):
@@ -84,12 +84,12 @@ class Maxpooling2D:
     def forward(self, inputs):
         self.inputs = inputs
         C, W, H = inputs.shape
-        new_width = (W - self.pool)/self.s + 1
-        new_height = (H - self.pool)/self.s + 1
+        new_width = int((W - self.pool)/self.s + 1)
+        new_height = int((H - self.pool)/self.s + 1)
         out = np.zeros((C, new_width, new_height))
         for c in range(C):
-            for w in range(W/self.s):
-                for h in range(H/self.s):
+            for w in range(int(W/self.s)):
+                for h in range(int(H/self.s)):
                     out[c, w, h] = np.max(self.inputs[c, w*self.s:w*self.s+self.pool, h*self.s:h*self.s+self.pool])
         return out
 
@@ -170,7 +170,7 @@ class Softmax:
     def __init__(self):
         pass
     def forward(self, inputs):
-        exp = np.exp(inputs, dtype=np.float)
+        exp = np.exp(inputs, dtype=np.float64)
         self.out = exp/np.sum(exp)
         return self.out
     def backward(self, dy):

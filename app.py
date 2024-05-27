@@ -14,7 +14,7 @@ def digit_prediction():
         img = preprocess(img)
         net = Net()
         digit, probability = net.predict_with_pretrained_weights(img, 'pretrained_weights.pkl')
-        data = { "digit":digit, "probability":float(int(probability*100))/100. }
+        data = { "digit":int(digit), "probability":float(int(probability*100))/100. }
         return jsonify(data)
 
 if __name__ == "__main__":

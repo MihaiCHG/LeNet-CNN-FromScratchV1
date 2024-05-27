@@ -114,7 +114,7 @@ class Net:
 
     def test_with_pretrained_weights(self, data, label, test_size, weights_file):
         with open(weights_file, 'rb') as handle:
-            b = pickle.load(handle)
+            b = pickle.load(handle, encoding='latin1')
         self.layers[0].feed(b[0]['conv1.weights'], b[0]['conv1.bias'])
         self.layers[3].feed(b[3]['conv3.weights'], b[3]['conv3.bias'])
         self.layers[6].feed(b[6]['conv5.weights'], b[6]['conv5.bias'])
@@ -147,7 +147,7 @@ class Net:
         
     def predict_with_pretrained_weights(self, inputs, weights_file):
         with open(weights_file, 'rb') as handle:
-            b = pickle.load(handle)
+            b = pickle.load(handle, encoding='latin1')
         self.layers[0].feed(b[0]['conv1.weights'], b[0]['conv1.bias'])
         self.layers[3].feed(b[3]['conv3.weights'], b[3]['conv3.bias'])
         self.layers[6].feed(b[6]['conv5.weights'], b[6]['conv5.bias'])
